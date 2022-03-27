@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, addDoc } from '@firebase/firestore';
 
-
 import { auth, db } from '../firebase';
 
 import { v4 } from 'uuid';

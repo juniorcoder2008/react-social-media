@@ -20,7 +20,7 @@ const Posts = () => {
       <h1 className='text-3xl font-bold'>New Posts</h1>
 
       {posts.map(postItem => {
-        return <PostItem postAuthor={postItem.data().username} postMessage={postItem.data().postMessage} postTitle={postItem.data().postTitle} />
+        return <PostItem postAuthor={postItem.data().username} postID={postItem.id} postMessage={postItem.data().postMessage} postTitle={postItem.data().postTitle} />
       })}
     </div>
   )
