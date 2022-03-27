@@ -38,11 +38,10 @@ const CreatePost = () => {
       if (item.data().email === userInfo.email) {
         post["username"] = item.data().name;
         post["email"] = item.data().email;
-        post["uid"] = item.data().uid;
       }
     });
 
-    
+    post["uid"] = userInfo.uid;
     post["postTitle"] = postTitle;
     post["postMessage"] = postMessage;
 

@@ -28,15 +28,14 @@ const Login = () => {
   const register = async e => {
     e.preventDefault();
 
-    createUserWithEmailAndPassword(auth, registerMail, registerPass).then(() => {
-      addDoc(collection(db, 'users'), {
+    await createUserWithEmailAndPassword(auth, registerMail, registerPass).then(async () => {
+      await addDoc(collection(db, 'users'), {
         email: registerMail,
         password: registerPass,
         name: registerName,
-        uid: v4(),
-      });
-      location.href = '/';
-    }).catch(err => console.log(err));    
+      }).then(() => location.href = '/');
+    });
+    
   }
 
   return (
