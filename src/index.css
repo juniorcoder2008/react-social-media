@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.md h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.md h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.md h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.md a {
+  color: rgb(99, 102, 241);
+  text-decoration: underline;
+}
