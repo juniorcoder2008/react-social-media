@@ -26,7 +26,6 @@ const Header = () => {
 
   const [loginState, setLoginState] = useState(false);
 
-  const [userInfo, setUserInfo] = useState();
   const [userName, setUserName] = useState();
 
   onAuthStateChanged(auth, async user => {
@@ -39,7 +38,6 @@ const Header = () => {
         })
       });
 
-      setUserInfo(user);
       setLoginState(true);
 
     } else {
