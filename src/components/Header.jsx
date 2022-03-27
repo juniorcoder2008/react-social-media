@@ -6,7 +6,9 @@ import { auth, db } from '../firebase';
 import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 import { collection, getDocs, query, where } from '@firebase/firestore';
 
-import { FaEllipsisV } from 'react-icons/fa'
+import { FaEllipsisV } from 'react-icons/fa';
+
+import JcLogo from '../assets/JcLogo';
 
 const Header = () => {
 
@@ -48,7 +50,11 @@ const Header = () => {
 
   return (
     <header className='relative flex bg-gray-50 px-20 border-b-2 py-4 justify-between items-center'>
-      <h1 className='text-3xl font-bold'><a href="/">React Social</a></h1>
+      <div className="header flex items-center gap-4">
+        <div className="logo"><JcLogo className='w-16' /></div>
+        <div className="h-8 w-1 bg-slate-800"></div>
+        <h1 className='text-3xl font-black uppercase'><a href="/">Social</a></h1>
+      </div>
 
       {!loginState ? 
         <button onClick={login} className='px-6 py-2 flex gap-3 bg-blue-500 text-white rounded-md font-medium cursor-pointer hover:bg-blue-600 relative transition'><a href="/login">Login</a></button> 

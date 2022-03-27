@@ -6,7 +6,6 @@ import { collection, addDoc } from '@firebase/firestore';
 import { auth, db } from '../firebase';
 
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { v4 } from 'uuid';
 
 const Login = () => {
 

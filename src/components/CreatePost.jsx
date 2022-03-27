@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { onAuthStateChanged } from 'firebase/auth';
-import { collection, addDoc, query, where, getDocs, doc, getDoc } from '@firebase/firestore';
+import { collection, addDoc, getDocs } from '@firebase/firestore';
 
 import { auth, db } from '../firebase';
 
