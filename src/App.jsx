@@ -1,33 +1,19 @@
 import React, { useState } from 'react';
 
-import Header from './components/Header';
-import CreatePost from './components/CreatePost';
-import Posts from './components/Posts';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { onAuthStateChanged } from 'firebase/auth';
-
-import { auth } from './firebase';
+import Home from './pages/Home';
+import Login from './pages/Login';
 
 const App = () => {
 
-  const [loginState, setLoginState] = useState(false);
-
-  // const [userInfo, setUserInfo] = useState();
-
-  onAuthStateChanged(auth, user => {
-    if(user) {
-      setLoginState(true);
-    } else {
-      setLoginState(false);
-    }
-  });
-
   return (
-    <div>
-      <Header />
-      {loginState ? <CreatePost /> : ''}
-      <Posts />
-    </div>
+    <Router>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+      </Routes>
+    </Router>
   )
 }
 

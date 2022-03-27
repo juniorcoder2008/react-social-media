@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { onAuthStateChanged } from 'firebase/auth';
-import { collection, addDoc } from '@firebase/firestore';
+import { collection, addDoc, query, where, getDocs, doc, getDoc } from '@firebase/firestore';
 
 import { auth, db } from '../firebase';
 
@@ -33,9 +33,16 @@ const CreatePost = () => {
 
   const sendPost = async (e) => {
     e.preventDefault();
-    post["username"] = userInfo.displayName;
-    post["email"] = userInfo.email;
-    post["uid"] = userInfo.uid;
+
+    (await getDocs(collection(db, 'users'))).docs.forEach(item => {
+      if (item.data().email === userInfo.email) {
+        post["username"] = item.data().name;
+        post["email"] = item.data().email;
+        post["uid"] = item.data().uid;
+      }
+    });
+
+    
     post["postTitle"] = postTitle;
     post["postMessage"] = postMessage;
 
