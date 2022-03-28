@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { useState } from 'react';
 
 import { FaTrash, FaEdit } from 'react-icons/fa';
@@ -53,7 +54,7 @@ const PostItem = ({ postTitle, postMessage, postAuthor, postID, postUser, postUU
         {userInfo.uid === postUser ? <div className='flex gap-4'>
           {showLoading ? <p className='text-rose-500'>Deleting post...</p> : ''}
           <button onClick={deleteMessage}><FaTrash color='rgb(244, 63, 94)' /></button>
-          <button onClick={editMessage}><FaEdit color='rgb(30, 30, 30)' /></button>
+          {!location.href === '/' ? <button onClick={editMessage}><FaEdit color='rgb(30, 30, 30)' /></button> : ''}
         </div> : ''}
       </div>
       <div className="md"><Markdown className='mt-3'>{postMessage}</Markdown></div>
