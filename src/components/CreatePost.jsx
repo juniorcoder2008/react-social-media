@@ -5,6 +5,8 @@ import { collection, addDoc, getDocs } from '@firebase/firestore';
 
 import { auth, db } from '../firebase';
 
+import { getDate } from '../getDate';
+
 import { v4 } from 'uuid';
 
 const CreatePost = () => {
@@ -29,6 +31,7 @@ const CreatePost = () => {
     uuid: v4(),
     postTitle: '',
     postMessage: '',
+    date: getDate(),
   }
 
   const sendPost = async (e) => {
@@ -69,8 +72,8 @@ const CreatePost = () => {
           <p className='text-stone-500 font-mono'>{postTitleLength}/60</p>
         </div>
         <div className='flex gap-4'>
-        <textarea maxLength={2000} value={postMessage} required onChange={e => {setPostMessage(e.target.value); setPostMessageLength(e.target.value.length)}} name="" id="" className='resize-none h-64 w-96 xl:w-1/3 bg-gray-200 px-4 py-3 outline-none rounded-md' placeholder='Content of the Post'></textarea>
-        <p className='text-stone-500 font-mono mt-1'>{postMessageLength}/2000</p>
+          <textarea maxLength={2000} value={postMessage} required onChange={e => {setPostMessage(e.target.value); setPostMessageLength(e.target.value.length)}} name="" id="" className='resize-none h-64 w-96 xl:w-1/3 bg-gray-200 px-4 py-3 outline-none rounded-md' placeholder='Content of the Post'></textarea>
+          <p className='text-stone-500 font-mono mt-1'>{postMessageLength}/2000</p>
         </div>
         <button type="submit" className='w-52 bg-emerald-500 text-white py-2 font-medium rounded-md hover:bg-emerald-600 transition'>Send Post</button>
       </form>

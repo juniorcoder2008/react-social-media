@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaEdit } from 'react-icons/fa';
 
 import Markdown from 'markdown-to-jsx';
 
@@ -8,11 +8,14 @@ import { auth, db } from '../firebase';
 
 import { onAuthStateChanged } from '@firebase/auth';
 import { collection, deleteDoc, doc, getDocs } from '@firebase/firestore';
+import EditPost from './EditPost';
 
-const PostItem = ({ postTitle, postMessage, postAuthor, postID, postUser }) => {
+const PostItem = ({ postTitle, postMessage, postAuthor, postID, postUser, postUUID }) => {
 
   const [userInfo, setUserInfo] = useState('');
   const [userData, setUserData] = useState('');
+
+  const [editPost, setEditPost] = useState(false);
 
   onAuthStateChanged(auth, user => {
     if(user) {
@@ -26,19 +29,28 @@ const PostItem = ({ postTitle, postMessage, postAuthor, postID, postUser }) => {
             uid: item.data().uid
           })
         })
-      })
+      });
     }
   });
 
   const deleteMessage = async () => {
+    console.log(postID)
     await deleteDoc(doc(db, "posts", postID));
+  }
+
+  const editMessage = async () => {
+    setEditPost(!editPost);
   }
 
   return (
     <div className='my-8 px-5 py-4 bg-gray-100 rounded-xl w-1/2'>
+      {editPost ? <EditPost currentPostTitle={postTitle} currentPostMessage={postMessage} currentDocID={postID} postMail={userInfo.email} postUUID={postUUID} postUid={userInfo.uid} /> : ''}
       <div className="flex items-center justify-between">
-        <h1 className='text-xl text-indigo-500 font-bold'>{postTitle} <span className='text-base text-stone-500 font-normal ml-2'>@{postAuthor}</span></h1>
-        {userInfo.uid === postUser ? <button onClick={deleteMessage}><FaTrash color='rgb(244, 63, 94)' /></button> : ''}
+        <h1 className='text-xl text-indigo-500 font-bold'>{postTitle} <span className='text-base text-stone-500 font-normal ml-2'>@{postAuthor === userData.name ? `${postAuthor} (You)` : postAuthor}</span></h1>
+        {userInfo.uid === postUser ? <div className='flex gap-4'>
+          <button onClick={deleteMessage}><FaTrash color='rgb(244, 63, 94)' /></button>
+          <button onClick={editMessage}><FaEdit color='rgb(30, 30, 30)' /></button>
+        </div> : ''}
       </div>
       <div className="md"><Markdown className='mt-3'>{postMessage}</Markdown></div>
     </div>

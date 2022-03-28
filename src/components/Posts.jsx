@@ -20,7 +20,7 @@ const Posts = () => {
       <h1 className='text-3xl font-bold'>New Posts</h1>
 
       {posts.length !== 0 ? posts.map(postItem => {
-        return <PostItem postAuthor={postItem.data().username} postUser={postItem.data().uid} postID={postItem.id} postMessage={postItem.data().postMessage} postTitle={postItem.data().postTitle} />
+        return <PostItem postAuthor={postItem.data().username} postUser={postItem.data().uid} postID={postItem.id} postMessage={postItem.data().postMessage} postTitle={postItem.data().postTitle} postUUID={postItem.data().uuid} />
       }) : <p className='mt-3 text-rose-500'>There are no posts on this platform</p>}
     </div>
   )
