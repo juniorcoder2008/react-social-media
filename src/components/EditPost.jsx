@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
 import { onAuthStateChanged } from '@firebase/auth';
-import { collection, doc, getDoc, setDoc, where, query, getDocs, updateDoc } from '@firebase/firestore';
+import { collection, doc, getDocs, updateDoc } from '@firebase/firestore';
 import React, { useState } from 'react';
 import { auth, db } from '../firebase';
 import { getDate } from '../getDate';
