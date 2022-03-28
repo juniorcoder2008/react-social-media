@@ -21,6 +21,8 @@ const CreatePost = () => {
   const [postMessage, setPostMessage] = useState('');
   const [postMessageLength, setPostMessageLength] = useState(0);
 
+  const [showLoading, setShowLoading] = useState(false);
+
   onAuthStateChanged(auth, (user) => {
     if(user) {
       setUserInfo(user);
@@ -37,18 +39,24 @@ const CreatePost = () => {
   const sendPost = async (e) => {
     e.preventDefault();
 
-    (await getDocs(collection(db, 'users'))).docs.forEach(item => {
-      if (item.data().email === userInfo.email) {
-        post["username"] = item.data().name;
-        post["email"] = item.data().email;
-      }
+    setShowLoading(true);
+
+    await getDocs(collection(db, 'users')).then(info => {
+      info.docs.forEach(item => {
+        if (item.data().email === userInfo.email) {
+          post["username"] = item.data().name;
+          post["email"] = item.data().email;
+        }
+      });
+
+      setShowLoading(false);
     });
 
     post["uid"] = userInfo.uid;
     post["postTitle"] = postTitle;
     post["postMessage"] = postMessage;
 
-    addDoc(postRef, post);
+    await addDoc(postRef, post);
 
     post = {
       uuid: v4(),
@@ -76,6 +84,7 @@ const CreatePost = () => {
           <p className='text-stone-500 font-mono mt-1'>{postMessageLength}/2000</p>
         </div>
         <button type="submit" className='w-52 bg-emerald-500 text-white py-2 font-medium rounded-md hover:bg-emerald-600 transition'>Send Post</button>
+        {showLoading ? <p className='text-emerald-500'>Sending Post... DO NOT RELOAD THIS BROWSER TAB</p> : ''}
       </form>
     </div>
   )

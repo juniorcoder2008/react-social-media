@@ -21,3 +21,8 @@
   color: rgb(99, 102, 241);
   text-decoration: underline;
 }
+
+.md ul {
+  list-style: disc;
+  margin-left: 2.4rem;
+}

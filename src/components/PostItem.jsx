@@ -10,12 +10,14 @@ import { onAuthStateChanged } from '@firebase/auth';
 import { collection, deleteDoc, doc, getDocs } from '@firebase/firestore';
 import EditPost from './EditPost';
 
-const PostItem = ({ postTitle, postMessage, postAuthor, postID, postUser, postUUID }) => {
+const PostItem = ({ postTitle, postMessage, postAuthor, postID, postUser, postUUID, postTime }) => {
 
   const [userInfo, setUserInfo] = useState('');
   const [userData, setUserData] = useState('');
 
   const [editPost, setEditPost] = useState(false);
+
+  const [showLoading, setShowLoading] = useState(false);
 
   onAuthStateChanged(auth, user => {
     if(user) {
@@ -35,7 +37,8 @@ const PostItem = ({ postTitle, postMessage, postAuthor, postID, postUser, postUU
 
   const deleteMessage = async () => {
     console.log(postID)
-    await deleteDoc(doc(db, "posts", postID));
+    setShowLoading(true);
+    await deleteDoc(doc(db, "posts", postID)).then(setShowLoading(false));
   }
 
   const editMessage = async () => {
@@ -46,8 +49,9 @@ const PostItem = ({ postTitle, postMessage, postAuthor, postID, postUser, postUU
     <div className='my-8 px-5 py-4 bg-gray-100 rounded-xl w-1/2'>
       {editPost ? <EditPost currentPostTitle={postTitle} currentPostMessage={postMessage} currentDocID={postID} postMail={userInfo.email} postUUID={postUUID} postUid={userInfo.uid} /> : ''}
       <div className="flex items-center justify-between">
-        <h1 className='text-xl text-indigo-500 font-bold'>{postTitle} <span className='text-base text-stone-500 font-normal ml-2'>@{postAuthor === userData.name ? `${postAuthor} (You)` : postAuthor}</span></h1>
+        <h1 className='text-xl text-indigo-500 font-bold'>{postTitle} <span className='text-base text-stone-500 font-normal ml-2'>@{postAuthor === userData.name ? `${postAuthor} (You)` : postAuthor} - {postTime}</span></h1>
         {userInfo.uid === postUser ? <div className='flex gap-4'>
+          {showLoading ? <p className='text-rose-500'>Deleting post...</p> : ''}
           <button onClick={deleteMessage}><FaTrash color='rgb(244, 63, 94)' /></button>
           <button onClick={editMessage}><FaEdit color='rgb(30, 30, 30)' /></button>
         </div> : ''}

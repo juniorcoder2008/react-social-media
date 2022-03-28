@@ -7,13 +7,15 @@ import { getDate } from '../getDate';
 
 import Header from './Header';
 
-const EditPost = ({ currentPostTitle, currentPostMessage, currentDocID, postMail, postUid, postUUID }) => {
+const EditPost = ({ currentPostTitle, currentPostMessage }) => {
 
   const [postTitle, setPostTitle] = useState(currentPostTitle);
   const [postTitleLength, setPostTitleLength] = useState(0);
 
   const [postMessage, setPostMessage] = useState(currentPostMessage);
   const [postMessageLength, setPostMessageLength] = useState(0);
+
+  const [showLoading, setShowLoading] = useState(false);
 
   let userMail = '';
 
@@ -23,6 +25,8 @@ const EditPost = ({ currentPostTitle, currentPostMessage, currentDocID, postMail
     e.preventDefault();
 
     let docID = ''
+
+    setShowLoading(true);
 
     getDocs(collection(db, 'posts')).then(info => {
       info.docs.forEach(item => {
@@ -41,7 +45,7 @@ const EditPost = ({ currentPostTitle, currentPostMessage, currentDocID, postMail
         console.log('Post wurde geupdated');
         location.href = '/own-posts'
       }).catch(err => console.log(err));
-    })
+    }).then(setShowLoading(false));
 
     
   }
@@ -62,6 +66,7 @@ const EditPost = ({ currentPostTitle, currentPostMessage, currentDocID, postMail
             <p className='text-stone-500 font-mono mt-1'>{postMessageLength}/2000</p>
           </div>
           <button type="submit" className='w-64 bg-emerald-500 text-white py-2 font-medium rounded-md hover:bg-emerald-600 transition'>Change post content</button>
+          {showLoading ? <p className='text-emerald-500'>Changing Post... DO NOT RELOAD THIS BROWSER TAB</p> : ''}
         </form>
       </div>
     </div>
