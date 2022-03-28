@@ -47,8 +47,6 @@ const PostItem = ({ postTitle, postMessage, postAuthor, postID, postUser, postUU
     setEditPost(!editPost);
   }
 
-  console.log(mainPage)
-
   return (
     <div className='my-8 px-5 py-4 bg-gray-100 rounded-xl w-1/2'>
       {editPost ? <EditPost currentPostTitle={postTitle} currentPostMessage={postMessage} currentDocID={postID} postMail={userInfo.email} postUUID={postUUID} postUid={userInfo.uid} /> : ''}
