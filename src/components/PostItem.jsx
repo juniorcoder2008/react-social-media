@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-restricted-globals */
 import React, { useState } from 'react';
 
@@ -11,7 +12,7 @@ import { onAuthStateChanged } from '@firebase/auth';
 import { collection, deleteDoc, doc, getDocs } from '@firebase/firestore';
 import EditPost from './EditPost';
 
-const PostItem = ({ postTitle, postMessage, postAuthor, postID, postUser, postUUID, postTime }) => {
+const PostItem = ({ postTitle, postMessage, postAuthor, postID, postUser, postUUID, postTime, mainPage }) => {
 
   const [userInfo, setUserInfo] = useState('');
   const [userData, setUserData] = useState('');
@@ -46,6 +47,8 @@ const PostItem = ({ postTitle, postMessage, postAuthor, postID, postUser, postUU
     setEditPost(!editPost);
   }
 
+  console.log(mainPage)
+
   return (
     <div className='my-8 px-5 py-4 bg-gray-100 rounded-xl w-1/2'>
       {editPost ? <EditPost currentPostTitle={postTitle} currentPostMessage={postMessage} currentDocID={postID} postMail={userInfo.email} postUUID={postUUID} postUid={userInfo.uid} /> : ''}
@@ -54,7 +57,7 @@ const PostItem = ({ postTitle, postMessage, postAuthor, postID, postUser, postUU
         {userInfo.uid === postUser ? <div className='flex gap-4'>
           {showLoading ? <p className='text-rose-500'>Deleting post...</p> : ''}
           <button onClick={deleteMessage}><FaTrash color='rgb(244, 63, 94)' /></button>
-          {!location.href === '/' ? <button onClick={editMessage}><FaEdit color='rgb(30, 30, 30)' /></button> : ''}
+          {mainPage == undefined ? '' : <button onClick={editMessage}><FaEdit color='rgb(30, 30, 30)' /></button>}
         </div> : ''}
       </div>
       <div className="md"><Markdown className='mt-3'>{postMessage}</Markdown></div>

@@ -34,7 +34,7 @@ const OwnPostList = () => {
       <h1 className='text-3xl font-bold'>Your own posts</h1>
 
       {posts.length !== 0 ? posts.map(postItem => {
-        return <PostItem postAuthor={postItem.username} postUser={postItem.uid} postID={postItem.id} postMessage={postItem.postMessage} postTitle={postItem.postTitle} />
+        return <PostItem mainPage={true} postAuthor={postItem.username} postUser={postItem.uid} postID={postItem.id} postMessage={postItem.postMessage} postTitle={postItem.postTitle} />
       }) : <p className='mt-3 text-rose-500'>There are no posts on this platform</p>}
     </div>
   )
